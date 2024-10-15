@@ -1,8 +1,3 @@
 spring:
   application:
     name: clean-city
-  api_google: 
-    redirect_uri: ${REDIRECT_URL:}
-    client_id: ${CLIENT_ID:}
-  server:
-    port: 8080
