@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Data
+@Table(name = "user_login")
 @Entity
 @Builder
 @NoArgsConstructor
@@ -23,10 +24,11 @@ public class User {
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_details_id")
     private UserDetails userDetails;
 
     @ElementCollection(targetClass = RolesEnum.class)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_login_id"))
     @Enumerated(EnumType.STRING)
     private Set<RolesEnum> roles = Set.of(RolesEnum.USER);
 

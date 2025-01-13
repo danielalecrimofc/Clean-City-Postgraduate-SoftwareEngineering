@@ -8,6 +8,7 @@ spring:
     driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
     username: ${DB_USER:sa}
     password: ${DB_PASS:}
+    schema: ${DB_SCHEMA:clean_city}
   h2:
     console:
       enabled: true

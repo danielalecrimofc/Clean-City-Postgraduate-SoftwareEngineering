@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Table(name = "user_details")
 @Entity
 @Builder
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class UserDetails {
     private String phone;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_login_id")
     private User user;
 
     @OneToOne(mappedBy = "userDetails", cascade = CascadeType.ALL)
