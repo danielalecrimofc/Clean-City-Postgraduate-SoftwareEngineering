@@ -4,10 +4,10 @@ spring:
   application:
     name: clean-city
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/clean-city}
+    driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:}
   h2:
     console:
       enabled: true
@@ -19,6 +19,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: ${DIALECT:org.hibernate.dialect.PostgreSQLDialect}
   security:
     jwt:
       secret: ${JWT-SECRET:oratoroeuaroupadoreideromaporcausadoalokqueestavatocandoforronatomorrowlanddeitu}
