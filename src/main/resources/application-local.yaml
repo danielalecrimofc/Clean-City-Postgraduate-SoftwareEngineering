@@ -1,14 +1,12 @@
 spring:
   application:
     name: clean-city
-<<<<<<< HEAD
-<<<<<<< HEAD
+server:
+  servlet:
+    context-path: /clean-city
   api_google: 
     redirect_uri: ${REDIRECT_URL:}
     client_id: ${CLIENT_ID:}
   server:
     port: 8080
-=======
->>>>>>> bef0785e52533369ed80fbb6443cfafef654c3f4
-=======
->>>>>>> bef0785e52533369ed80fbb6443cfafef654c3f4
+
