@@ -4,6 +4,7 @@ import br.com.clean_city.security.filter.JwtRequestFilter;
 import br.com.clean_city.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,13 +23,13 @@ public class SecurityConfig {
     private final JwtRequestFilter jwtRequestFilter;
     private final CustomUserDetailsServiceImpl userDetailsService;
 
-    public SecurityConfig(JwtRequestFilter jwtRequestFilter, CustomUserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(@Lazy JwtRequestFilter jwtRequestFilter, CustomUserDetailsServiceImpl userDetailsService) {
         this.jwtRequestFilter = jwtRequestFilter;
         this.userDetailsService = userDetailsService;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

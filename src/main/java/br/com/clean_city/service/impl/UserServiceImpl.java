@@ -8,9 +8,12 @@ import br.com.clean_city.model.dto.user.UserResponseDTO;
 import br.com.clean_city.model.enums.RolesEnum;
 import br.com.clean_city.repository.UserRepository;
 import br.com.clean_city.service.UserService;
+
+import org.bouncycastle.jcajce.provider.keystore.BC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +23,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserResponseDTO createUser(UserRegisterDTO userRegisterDTO) {
@@ -51,7 +60,7 @@ public class UserServiceImpl implements UserService {
         
         User user = User.builder()
                 .username(userRegisterDTO.getEmail())
-                .password(userRegisterDTO.getPassword())
+                .password(passwordEncoder.encode(userRegisterDTO.getPassword()))
                 .roles(Set.of(RolesEnum.USER))
                 .userDetails(userDetails)
                 .build();
