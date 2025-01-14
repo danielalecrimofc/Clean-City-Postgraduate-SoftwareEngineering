@@ -23,13 +23,10 @@ public class User {
     private String username;
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_details_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetails userDetails;
 
-    @ElementCollection(targetClass = RolesEnum.class)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_login_id"))
     @Enumerated(EnumType.STRING)
-    private Set<RolesEnum> roles = Set.of(RolesEnum.USER);
+    private Set<RolesEnum> roles;
 
 }

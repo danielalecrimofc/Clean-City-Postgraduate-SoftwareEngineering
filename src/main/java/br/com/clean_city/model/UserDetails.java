@@ -28,7 +28,7 @@ public class UserDetails {
     @JoinColumn(name = "user_login_id")
     private User user;
 
-    @OneToOne(mappedBy = "userDetails", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userDetails", cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
 
 }

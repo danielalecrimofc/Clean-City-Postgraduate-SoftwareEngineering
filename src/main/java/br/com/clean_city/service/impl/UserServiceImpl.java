@@ -5,6 +5,7 @@ import br.com.clean_city.model.User;
 import br.com.clean_city.model.UserDetails;
 import br.com.clean_city.model.dto.user.UserRegisterDTO;
 import br.com.clean_city.model.dto.user.UserResponseDTO;
+import br.com.clean_city.model.enums.RolesEnum;
 import br.com.clean_city.repository.UserRepository;
 import br.com.clean_city.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO createUser(UserRegisterDTO userRegisterDTO) {
+        
+
+                UserDetails userDetails = UserDetails.builder()
+                .firstName(userRegisterDTO.getFirstName())
+                .lastName(userRegisterDTO.getLastName())
+                .email(userRegisterDTO.getEmail())
+                .birthDate(userRegisterDTO.getBirthDate())
+                .cpf(userRegisterDTO.getCpf())
+                .phone(userRegisterDTO.getPhone())
+                .build();
+        
         Address address = Address.builder()
                 .cep(userRegisterDTO.getCep())
                 .address(userRegisterDTO.getAddress())
@@ -32,23 +44,20 @@ public class UserServiceImpl implements UserService {
                 .city(userRegisterDTO.getCity())
                 .state(userRegisterDTO.getState())
                 .country(userRegisterDTO.getCountry())
-                .build();
-
-        UserDetails userDetails = UserDetails.builder()
-                .firstName(userRegisterDTO.getFirstName())
-                .lastName(userRegisterDTO.getLastName())
-                .email(userRegisterDTO.getEmail())
-                .birthDate(userRegisterDTO.getBirthDate())
-                .cpf(userRegisterDTO.getCpf())
-                .phone(userRegisterDTO.getPhone())
-                .address(address)
-                .build();
-
-        User user = User.builder()
-                .username(userRegisterDTO.getEmail())
                 .userDetails(userDetails)
                 .build();
-
+        
+        userDetails.setAddress(address);
+        
+        User user = User.builder()
+                .username(userRegisterDTO.getEmail())
+                .password(userRegisterDTO.getPassword())
+                .roles(Set.of(RolesEnum.USER))
+                .userDetails(userDetails)
+                .build();
+        
+        userDetails.setUser(user);
+        
         userRepository.save(user);
         return new UserResponseDTO(user);
     }
