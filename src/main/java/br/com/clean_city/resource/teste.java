@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/teste")
+@RequestMapping("/api/v1/teste")
 public class teste {
 
     @GetMapping("/admin")
