@@ -29,4 +29,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<RolesEnum> roles;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Action> actions;
+
 }

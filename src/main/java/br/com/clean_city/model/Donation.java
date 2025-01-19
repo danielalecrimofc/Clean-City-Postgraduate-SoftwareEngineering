@@ -6,30 +6,30 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
-@Table(name = "address")
+@Table(name = "donation")
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Donation {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cep;
-    private String address;
-    private String complement;
-    private String neighborhood;
-    private String city;
-    private String state;
-    private String country;
 
-    @OneToOne
-    @JoinColumn(name = "user_details_id")
-    private UserDetails userDetails;
+    private String name;
+    private String cpf;
+    private Double value;
+    private LocalDateTime date;
+    private String telephone;
+    private String email;
+    private String idTransaction;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "action_id")
     private Action action;
 
