@@ -1,5 +1,6 @@
 package br.com.clean_city.model.dto.action;
 
+import br.com.clean_city.model.dto.user.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class ActionRequestDTO {
     private byte[] image;
     private LocalDateTime date;
     private Long userId;
+    private AddressDTO address;
 }

@@ -42,7 +42,7 @@ public class AuthController {
         final String jwt = jwtUtil.generateToken(userDetails);
 
         var user = userService.getUserByUsername(authRequest.username());
-        AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getUsername(), user.getRoles(), jwt);
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(user.getId(), user.getUserDetails().getFirstName(), user.getUsername(), user.getRoles(), jwt);
 
         return ResponseEntity.ok(authResponseDTO);
     }

@@ -1,10 +1,12 @@
 package br.com.clean_city.service.impl;
 
 import br.com.clean_city.model.Action;
+import br.com.clean_city.model.Address;
 import br.com.clean_city.model.User;
 import br.com.clean_city.model.dto.action.ActionRequestDTO;
 import br.com.clean_city.model.dto.action.ActionResponseDTO;
 import br.com.clean_city.model.dto.donation.DonorInfoDTO;
+import br.com.clean_city.model.dto.user.AddressDTO;
 import br.com.clean_city.repository.ActionRepository;
 import br.com.clean_city.repository.DonationRepository;
 import br.com.clean_city.repository.UserRepository;
@@ -39,6 +41,17 @@ public class ActionServiceImpl implements ActionService {
             User user = userRepository.findById(actionRequestDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
             action.setUser(user);
         }
+
+        Address address = action.getAddress();
+        AddressDTO addressDTO = actionRequestDTO.getAddress();
+        if (addressDTO != null) {
+            address.setAddress(addressDTO.getAddress());
+            address.setCity(addressDTO.getCity());
+            address.setState(addressDTO.getState());
+            address.setCep(addressDTO.getCep());
+            address.setCountry(addressDTO.getCountry());
+        }
+        action.setAddress(address);
         action = actionRepository.save(action);
         return new ActionResponseDTO(action);
     }
@@ -66,6 +79,16 @@ public class ActionServiceImpl implements ActionService {
             User user = userRepository.findById(actionRequestDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
             action.setUser(user);
         }
+        Address address = action.getAddress();
+        AddressDTO addressDTO = actionRequestDTO.getAddress();
+        if (addressDTO != null) {
+            address.setAddress(addressDTO.getAddress());
+            address.setCity(addressDTO.getCity());
+            address.setState(addressDTO.getState());
+            address.setCep(addressDTO.getCep());
+            address.setCountry(addressDTO.getCountry());
+        }
+        action.setAddress(address);
         action = actionRepository.save(action);
         return new ActionResponseDTO(action);
     }

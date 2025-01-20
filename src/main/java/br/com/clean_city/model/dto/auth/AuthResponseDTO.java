@@ -9,12 +9,14 @@ import java.util.Set;
 public class AuthResponseDTO {
 
     private Long id;
+    private String name;
     private String username;
     private Set<RolesEnum> roles;
     private String token;
 
-    public AuthResponseDTO(Long id, String username, Set<RolesEnum> roles, String token) {
+    public AuthResponseDTO(Long id, String name, String username, Set<RolesEnum> roles, String token) {
         this.id = id;
+        this.name = name;
         this.username = username;
         this.roles = roles;
         this.token = token;
