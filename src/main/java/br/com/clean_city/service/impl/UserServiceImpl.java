@@ -133,4 +133,26 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 
+    @Override
+    public UserResponseDTO addRolesToUser(Long id, Set<String> roles) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Set<RolesEnum> rolesEnumSet = roles.stream()
+                .map(RolesEnum::valueOf)
+                .collect(Collectors.toSet());
+        user.getRoles().addAll(rolesEnumSet);
+        user = userRepository.save(user);
+        return new UserResponseDTO(user);
+    }
+
+    @Override
+    public UserResponseDTO removeRolesFromUser(Long id, Set<String> roles) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Set<RolesEnum> rolesEnumSet = roles.stream()
+                .map(RolesEnum::valueOf)
+                .collect(Collectors.toSet());
+        user.getRoles().removeAll(rolesEnumSet);
+        user = userRepository.save(user);
+        return new UserResponseDTO(user);
+    }
+
 }

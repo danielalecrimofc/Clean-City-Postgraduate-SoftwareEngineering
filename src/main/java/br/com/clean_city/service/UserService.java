@@ -6,6 +6,7 @@ import br.com.clean_city.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -16,5 +17,6 @@ public interface UserService {
     void deleteUser(Long id);
     User getUserByUsername(String username);
     UserDetails convertToUserDetails(User user);
-
+    UserResponseDTO addRolesToUser(Long id, Set<String> roles);
+    UserResponseDTO removeRolesFromUser(Long id, Set<String> roles);
 }

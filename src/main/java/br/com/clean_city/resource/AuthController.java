@@ -46,4 +46,11 @@ public class AuthController {
 
         return ResponseEntity.ok(authResponseDTO);
     }
+
+    @Operation(summary = "Validate JWT token", description = "Validate JWT token")
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validateToken(@RequestParam String token) {
+        boolean isValid = jwtUtil.validateToken(token);
+        return ResponseEntity.ok(isValid);
+    }
 }

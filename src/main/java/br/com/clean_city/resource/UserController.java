@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -53,4 +54,19 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Add roles to user", description = "Add roles to user",  tags = {"User Permissions"})
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<UserResponseDTO> addRolesToUser(@PathVariable Long id, @RequestBody Set<String> roles) {
+        UserResponseDTO userResponseDTO = userService.addRolesToUser(id, roles);
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
+    @Operation(summary = "Remove roles from user", description = "Remove roles from user", tags = {"User Permissions"})
+    @DeleteMapping("/{id}/roles")
+    public ResponseEntity<UserResponseDTO> removeRolesFromUser(@PathVariable Long id, @RequestBody Set<String> roles) {
+        UserResponseDTO userResponseDTO = userService.removeRolesFromUser(id, roles);
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
 }
