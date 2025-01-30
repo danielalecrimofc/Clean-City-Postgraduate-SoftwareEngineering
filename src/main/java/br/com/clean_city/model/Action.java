@@ -27,7 +27,7 @@ public class Action {
     private String description;
 
     @Lob
-    private byte[] image;
+    private String image;
     private LocalDateTime date;
     private Boolean active;
 

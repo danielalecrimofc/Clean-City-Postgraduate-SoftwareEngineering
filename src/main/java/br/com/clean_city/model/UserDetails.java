@@ -1,10 +1,7 @@
 package br.com.clean_city.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Table(name = "user_details")
@@ -26,9 +23,11 @@ public class UserDetails {
 
     @OneToOne
     @JoinColumn(name = "user_login_id")
+    @ToString.Exclude
     private User user;
 
     @OneToOne(mappedBy = "userDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private Address address;
 
 }

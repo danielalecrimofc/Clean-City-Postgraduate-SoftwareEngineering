@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class UserController {
 
     @Operation(summary = "Update user", description = "Update user")
     @PutMapping("/{id}")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRegisterDTO userRegisterDTO) {
         UserResponseDTO userResponseDTO = userService.updateUser(id, userRegisterDTO);
         return ResponseEntity.ok(userResponseDTO);
@@ -50,6 +52,7 @@ public class UserController {
 
     @Operation(summary = "Delete user", description = "Delete user")
     @DeleteMapping("/{id}")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -57,6 +60,7 @@ public class UserController {
 
     @Operation(summary = "Add roles to user", description = "Add roles to user",  tags = {"User Permissions"})
     @PostMapping("/{id}/roles")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponseDTO> addRolesToUser(@PathVariable Long id, @RequestBody Set<String> roles) {
         UserResponseDTO userResponseDTO = userService.addRolesToUser(id, roles);
         return ResponseEntity.ok(userResponseDTO);
@@ -64,6 +68,7 @@ public class UserController {
 
     @Operation(summary = "Remove roles from user", description = "Remove roles from user", tags = {"User Permissions"})
     @DeleteMapping("/{id}/roles")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponseDTO> removeRolesFromUser(@PathVariable Long id, @RequestBody Set<String> roles) {
         UserResponseDTO userResponseDTO = userService.removeRolesFromUser(id, roles);
         return ResponseEntity.ok(userResponseDTO);

@@ -14,6 +14,7 @@ import br.com.clean_city.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,17 +43,24 @@ public class ActionServiceImpl implements ActionService {
             action.setUser(user);
         }
 
-        Address address = action.getAddress();
+        Address address = new Address();
         AddressDTO addressDTO = actionRequestDTO.getAddress();
+        System.out.println("addressDTO: " + addressDTO);
         if (addressDTO != null) {
+            System.out.println("ta aquiiiiiiiiiiiiiii");
+            System.out.println("addressDTO.getAddress(): " + addressDTO.getAddress());
             address.setAddress(addressDTO.getAddress());
             address.setCity(addressDTO.getCity());
             address.setState(addressDTO.getState());
             address.setCep(addressDTO.getCep());
             address.setCountry(addressDTO.getCountry());
+            action.setAddress(address);
+            System.out.println("action: " + action);
         }
-        action.setAddress(address);
+
+
         action = actionRepository.save(action);
+        System.out.println("action: " + action);
         return new ActionResponseDTO(action);
     }
 

@@ -1,6 +1,7 @@
 package br.com.clean_city.model.dto.action;
 
 import br.com.clean_city.model.Action;
+import br.com.clean_city.model.dto.user.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,10 @@ public class ActionResponseDTO {
     private Long id;
     private String name;
     private String description;
-    private byte[] image;
+    private String image;
     private LocalDateTime date;
     private Long userId;
+    private AddressDTO address;
 
     public ActionResponseDTO(Action action) {
         this.id = action.getId();
@@ -27,5 +29,9 @@ public class ActionResponseDTO {
         this.image = action.getImage();
         this.date = action.getDate();
         this.userId = action.getUser() != null ? action.getUser().getId() : null;
+        if (action.getAddress() != null) {
+            this.address = new AddressDTO(action.getAddress());
+        }
+
     }
 }

@@ -2,10 +2,7 @@ package br.com.clean_city.model;
 
 import br.com.clean_city.model.enums.RolesEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -30,6 +27,7 @@ public class User {
     private Set<RolesEnum> roles;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private Set<Action> actions;
 
 }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ActionRequestDTO {
     private String name;
     private String description;
-    private byte[] image;
+    private String image;
     private LocalDateTime date;
     private Long userId;
     private AddressDTO address;
