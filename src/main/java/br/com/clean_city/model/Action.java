@@ -1,10 +1,7 @@
 package br.com.clean_city.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,6 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Action {
 
     @Id
@@ -37,7 +35,10 @@ public class Action {
     @UpdateTimestamp
     private Instant updatedAt;
 
-    @OneToOne(mappedBy = "action", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Address address;
 
     @ManyToOne

@@ -3,6 +3,10 @@ package br.com.clean_city.model.dto.user;
 import br.com.clean_city.model.UserDetails;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
 public class UserDetailsDTO {
 
@@ -20,9 +24,16 @@ public class UserDetailsDTO {
         this.firstName = userDetails.getFirstName();
         this.lastName = userDetails.getLastName();
         this.email = userDetails.getEmail();
-        this.birthDate = userDetails.getBirthDate();
+        this.birthDate = formatBirthDate(userDetails.getBirthDate());
         this.cpf = userDetails.getCpf();
         this.phone = userDetails.getPhone();
         this.address = new AddressDTO(userDetails.getAddress());
     }
+
+    private String formatBirthDate(String birthDate) {
+        OffsetDateTime dateTime = OffsetDateTime.parse(birthDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateTime.format(formatter);
+    }
+
 }

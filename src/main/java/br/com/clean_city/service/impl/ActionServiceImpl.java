@@ -8,6 +8,7 @@ import br.com.clean_city.model.dto.action.ActionResponseDTO;
 import br.com.clean_city.model.dto.donation.DonorInfoDTO;
 import br.com.clean_city.model.dto.user.AddressDTO;
 import br.com.clean_city.repository.ActionRepository;
+import br.com.clean_city.repository.AddressRepository;
 import br.com.clean_city.repository.DonationRepository;
 import br.com.clean_city.repository.UserRepository;
 import br.com.clean_city.service.ActionService;
@@ -30,14 +31,18 @@ public class ActionServiceImpl implements ActionService {
     @Autowired
     private DonationRepository donationRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @Override
     public ActionResponseDTO createAction(ActionRequestDTO actionRequestDTO) {
+
         Action action = new Action();
-        // map fields from actionRequestDTO to action
         action.setName(actionRequestDTO.getName());
         action.setDescription(actionRequestDTO.getDescription());
         action.setImage(actionRequestDTO.getImage());
         action.setDate(actionRequestDTO.getDate());
+        action.setActive(false);
         if (actionRequestDTO.getUserId() != null) {
             User user = userRepository.findById(actionRequestDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
             action.setUser(user);
@@ -45,34 +50,33 @@ public class ActionServiceImpl implements ActionService {
 
         Address address = new Address();
         AddressDTO addressDTO = actionRequestDTO.getAddress();
-        System.out.println("addressDTO: " + addressDTO);
         if (addressDTO != null) {
-            System.out.println("ta aquiiiiiiiiiiiiiii");
-            System.out.println("addressDTO.getAddress(): " + addressDTO.getAddress());
             address.setAddress(addressDTO.getAddress());
             address.setCity(addressDTO.getCity());
             address.setState(addressDTO.getState());
             address.setCep(addressDTO.getCep());
             address.setCountry(addressDTO.getCountry());
             action.setAddress(address);
-            System.out.println("action: " + action);
         }
 
-
         action = actionRepository.save(action);
-        System.out.println("action: " + action);
-        return new ActionResponseDTO(action);
+        return new ActionResponseDTO().of(action);
     }
 
     @Override
     public ActionResponseDTO getActionById(Long id) {
         Action action = actionRepository.findById(id).orElseThrow(() -> new RuntimeException("Action not found"));
-        return new ActionResponseDTO(action);
+        Address address = addressRepository.findById(action.getAddress().getId()).orElseThrow(() -> new RuntimeException("Address not found"));
+        action.setAddress(address);
+        System.out.println("action: " + action);
+        return new ActionResponseDTO().of(action);
     }
+
 
     @Override
     public List<ActionResponseDTO> getAllActions() {
-        return actionRepository.findAll().stream().map(ActionResponseDTO::new).collect(Collectors.toList());
+        var actions = actionRepository.findAll();
+        return new ActionResponseDTO().of(actions);
     }
 
     @Override
@@ -98,7 +102,7 @@ public class ActionServiceImpl implements ActionService {
         }
         action.setAddress(address);
         action = actionRepository.save(action);
-        return new ActionResponseDTO(action);
+        return new ActionResponseDTO().of(action);
     }
 
     @Override
@@ -112,7 +116,7 @@ public class ActionServiceImpl implements ActionService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         action.setUser(user);
         action = actionRepository.save(action);
-        return new ActionResponseDTO(action);
+        return new ActionResponseDTO().of(action);
     }
 
     @Override
@@ -123,5 +127,12 @@ public class ActionServiceImpl implements ActionService {
     @Override
     public List<DonorInfoDTO> getDonorInfoByActionId(Long actionId) {
         return donationRepository.findDonorInfoByActionId(actionId);
+    }
+
+    @Override
+    public ActionResponseDTO enableAction(Long id, Boolean enable){
+        Action action = actionRepository.findById(id).orElseThrow(() -> new RuntimeException("Action not found"));
+        action.setActive(enable);
+        return new ActionResponseDTO().of(actionRepository.save(action));
     }
 }

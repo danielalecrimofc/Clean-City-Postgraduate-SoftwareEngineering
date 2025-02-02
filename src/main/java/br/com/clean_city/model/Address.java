@@ -1,10 +1,8 @@
 package br.com.clean_city.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Table(name = "address")
@@ -12,10 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     private String cep;
     private String address;
@@ -29,8 +29,10 @@ public class Address {
     @JoinColumn(name = "user_details_id")
     private UserDetails userDetails;
 
-    @OneToOne
-    @JoinColumn(name = "action_id")
+    @OneToOne(mappedBy = "address")
+    @ToString.Exclude
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Action action;
 
 }

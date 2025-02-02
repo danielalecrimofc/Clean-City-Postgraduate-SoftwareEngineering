@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -21,17 +23,23 @@ public class ActionResponseDTO {
     private LocalDateTime date;
     private Long userId;
     private AddressDTO address;
+    private Boolean active;
 
-    public ActionResponseDTO(Action action) {
-        this.id = action.getId();
-        this.name = action.getName();
-        this.description = action.getDescription();
-        this.image = action.getImage();
-        this.date = action.getDate();
-        this.userId = action.getUser() != null ? action.getUser().getId() : null;
-        if (action.getAddress() != null) {
-            this.address = new AddressDTO(action.getAddress());
-        }
-
+    public ActionResponseDTO of(Action action) {
+        return ActionResponseDTO.builder()
+            .id(action.getId())
+            .name(action.getName())
+            .description(action.getDescription())
+            .image(action.getImage())
+            .date(action.getDate())
+            .active(action.getActive())
+            .userId(action.getUser() != null ? action.getUser().getId() : null)
+            .address(action.getAddress() != null ? new AddressDTO(action.getAddress()) : null)
+            .build();
     }
+
+    public List<ActionResponseDTO> of(List<Action> actions) {
+        return actions.stream().map(this::of).collect(Collectors.toList());
+    }
+
 }

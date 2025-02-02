@@ -9,9 +9,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDetails {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
@@ -22,12 +24,14 @@ public class UserDetails {
     private String phone;
 
     @OneToOne
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "user_login_id")
     @ToString.Exclude
     private User user;
 
     @OneToOne(mappedBy = "userDetails", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Address address;
 
 }

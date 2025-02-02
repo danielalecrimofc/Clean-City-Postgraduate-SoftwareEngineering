@@ -12,20 +12,24 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
 
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetails userDetails;
 
     @Enumerated(EnumType.STRING)
     private Set<RolesEnum> roles;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<Action> actions;

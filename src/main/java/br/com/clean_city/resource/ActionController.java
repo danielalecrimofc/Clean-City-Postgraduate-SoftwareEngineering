@@ -48,6 +48,13 @@ public class ActionController {
         return ResponseEntity.ok(updatedAction);
     }
 
+    @Operation(summary = "Enable/Disable action", description = "Enable/Disable action")
+    @PutMapping("/{id}/enable")
+    public ResponseEntity<ActionResponseDTO> enableAction(@PathVariable Long id, @RequestParam Boolean enable) {
+        ActionResponseDTO updatedAction = actionService.enableAction(id, enable);
+        return ResponseEntity.ok(updatedAction);
+    }
+
     @Operation(summary = "Delete action", description = "Delete action")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAction(@PathVariable Long id) {

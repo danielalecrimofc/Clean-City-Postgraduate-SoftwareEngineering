@@ -1,10 +1,7 @@
 package br.com.clean_city.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +28,7 @@ public class Donation {
 
     @ManyToOne
     @JoinColumn(name = "action_id")
+    @ToString.Exclude
     private Action action;
 
 }

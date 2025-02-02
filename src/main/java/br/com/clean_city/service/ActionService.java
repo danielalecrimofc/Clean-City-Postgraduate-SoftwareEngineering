@@ -16,5 +16,5 @@ public interface ActionService {
     ActionResponseDTO linkUserToAction(Long actionId, Long userId);
     Double getTotalDonationsByActionId(Long actionId);
     List<DonorInfoDTO> getDonorInfoByActionId(Long actionId);
-
+    ActionResponseDTO enableAction(Long id, Boolean enable);
 }
