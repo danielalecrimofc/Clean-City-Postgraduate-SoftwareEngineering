@@ -36,8 +36,8 @@ public class ActionController {
 
     @Operation(summary = "Get all actions", description = "Get all actions")
     @GetMapping
-    public ResponseEntity<List<ActionResponseDTO>> getAllActions() {
-        List<ActionResponseDTO> actions = actionService.getAllActions();
+    public ResponseEntity<List<ActionResponseDTO>> getAllActions(@RequestParam(required = false) Boolean active) {
+        List<ActionResponseDTO> actions = actionService.getAllActions(active);
         return ResponseEntity.ok(actions);
     }
 

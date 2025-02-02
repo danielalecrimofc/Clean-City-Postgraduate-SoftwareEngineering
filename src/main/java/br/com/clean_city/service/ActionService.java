@@ -10,7 +10,7 @@ public interface ActionService {
 
     ActionResponseDTO createAction(ActionRequestDTO actionRequestDTO);
     ActionResponseDTO getActionById(Long id);
-    List<ActionResponseDTO> getAllActions();
+    List<ActionResponseDTO> getAllActions(Boolean active);
     ActionResponseDTO updateAction(Long id, ActionRequestDTO actionRequestDTO);
     void deleteAction(Long id);
     ActionResponseDTO linkUserToAction(Long actionId, Long userId);

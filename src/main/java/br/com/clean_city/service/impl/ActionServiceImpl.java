@@ -74,9 +74,16 @@ public class ActionServiceImpl implements ActionService {
 
 
     @Override
-    public List<ActionResponseDTO> getAllActions() {
-        var actions = actionRepository.findAll();
-        return new ActionResponseDTO().of(actions);
+    public List<ActionResponseDTO> getAllActions(Boolean active) {
+        List<Action> actions;
+        if (active != null) {
+            actions = actionRepository.findByActive(active);
+        } else {
+            actions = actionRepository.findAll();
+        }
+        return actions.stream()
+                      .map(action -> new ActionResponseDTO().of(action))
+                      .collect(Collectors.toList());
     }
 
     @Override

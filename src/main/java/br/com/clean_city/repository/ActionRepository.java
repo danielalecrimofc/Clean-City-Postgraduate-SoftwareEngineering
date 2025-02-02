@@ -12,4 +12,6 @@ import java.util.List;
 @Repository
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
+    List<Action> findByActive(Boolean active);
+
 }
