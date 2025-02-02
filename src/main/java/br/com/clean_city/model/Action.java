@@ -24,7 +24,7 @@ public class Action {
     private String name;
     private String description;
 
-    @Lob
+    @Column(columnDefinition = "TEXT", length = 100000)
     private String image;
     private LocalDateTime date;
     private Boolean active;
