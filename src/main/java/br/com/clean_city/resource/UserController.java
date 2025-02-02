@@ -15,34 +15,33 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@Tag(name = "User", description = "User API")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @Operation(summary = "Create user", description = "Create user")
+    @Operation(summary = "Create user", description = "Create user", tags = {"User"})
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
         UserResponseDTO userResponseDTO = userService.createUser(userRegisterDTO);
         return ResponseEntity.ok(userResponseDTO);
     }
 
-    @Operation(summary = "Get user by id", description = "Get user by id")
+    @Operation(summary = "Get user by id", description = "Get user by id", tags = {"User"})
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         UserResponseDTO userResponseDTO = userService.getUserById(id);
         return ResponseEntity.ok(userResponseDTO);
     }
 
-    @Operation(summary = "Get all users", description = "Get all users")
+    @Operation(summary = "Get all users", description = "Get all users", tags = {"User"})
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-    @Operation(summary = "Update user", description = "Update user")
+    @Operation(summary = "Update user", description = "Update user", tags = {"User"})
     @PutMapping("/{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRegisterDTO userRegisterDTO) {
@@ -50,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTO);
     }
 
-    @Operation(summary = "Delete user", description = "Delete user")
+    @Operation(summary = "Delete user", description = "Delete user", tags = {"User"})
     @DeleteMapping("/{id}")
    // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

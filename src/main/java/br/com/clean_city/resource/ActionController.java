@@ -14,69 +14,68 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/actions")
-@Tag(name = "Action", description = "The Action API")
 public class ActionController {
 
     @Autowired
     private ActionService actionService;
 
-    @Operation(summary = "Create action", description = "Create action")
+    @Operation(summary = "Create action", description = "Create action", tags = {"Action"})
     @PostMapping
     public ResponseEntity<ActionResponseDTO> createAction(@RequestBody ActionRequestDTO actionRequestDTO) {
         ActionResponseDTO createdAction = actionService.createAction(actionRequestDTO);
         return ResponseEntity.ok(createdAction);
     }
 
-    @Operation(summary = "Get action by id", description = "Get action by id")
+    @Operation(summary = "Get action by id", description = "Get action by id", tags = {"Action"})
     @GetMapping("/{id}")
     public ResponseEntity<ActionResponseDTO> getActionById(@PathVariable Long id) {
         ActionResponseDTO actionResponseDTO = actionService.getActionById(id);
         return ResponseEntity.ok(actionResponseDTO);
     }
 
-    @Operation(summary = "Get all actions", description = "Get all actions")
+    @Operation(summary = "Get all actions", description = "Get all actions", tags = {"Action"})
     @GetMapping
     public ResponseEntity<List<ActionResponseDTO>> getAllActions(@RequestParam(required = false) Boolean active) {
         List<ActionResponseDTO> actions = actionService.getAllActions(active);
         return ResponseEntity.ok(actions);
     }
 
-    @Operation(summary = "Update action", description = "Update action")
+    @Operation(summary = "Update action", description = "Update action", tags = {"Action"})
     @PutMapping("/{id}")
     public ResponseEntity<ActionResponseDTO> updateAction(@PathVariable Long id, @RequestBody ActionRequestDTO actionRequestDTO) {
         ActionResponseDTO updatedAction = actionService.updateAction(id, actionRequestDTO);
         return ResponseEntity.ok(updatedAction);
     }
 
-    @Operation(summary = "Enable/Disable action", description = "Enable/Disable action")
+    @Operation(summary = "Enable/Disable action", description = "Enable/Disable action", tags = {"Action"})
     @PutMapping("/{id}/enable")
     public ResponseEntity<ActionResponseDTO> enableAction(@PathVariable Long id, @RequestParam Boolean enable) {
         ActionResponseDTO updatedAction = actionService.enableAction(id, enable);
         return ResponseEntity.ok(updatedAction);
     }
 
-    @Operation(summary = "Delete action", description = "Delete action")
+    @Operation(summary = "Delete action", description = "Delete action", tags = {"Action"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAction(@PathVariable Long id) {
         actionService.deleteAction(id);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Link user to action", description = "Link user to action")
+    @Operation(summary = "Link user to action", description = "Link user to action", tags = {"User"})
     @PostMapping("/{actionId}/users/{userId}")
     public ResponseEntity<ActionResponseDTO> linkUserToAction(@PathVariable Long actionId, @PathVariable Long userId) {
         ActionResponseDTO actionResponseDTO = actionService.linkUserToAction(actionId, userId);
         return ResponseEntity.ok(actionResponseDTO);
     }
 
-    @Operation(summary = "Get total donations by action id", description = "Get total donations by action id")
+    @Operation(summary = "Get total donations by action id", description = "Get total donations by action id", tags = {"Donation"})
     @GetMapping("/{id}/total-donations")
     public ResponseEntity<Double> getTotalDonationsByActionId(@PathVariable Long id) {
         Double totalDonations = actionService.getTotalDonationsByActionId(id);
         return ResponseEntity.ok(totalDonations);
     }
 
-    @Operation(summary = "Get donor info by action id", description = "Get donor info by action id")
+    @Operation(summary = "Get donor info by action id", description = "Get donor info by action id", tags = {"Donation"})
     @GetMapping("/{id}/donor-info")
     public ResponseEntity<List<DonorInfoDTO>> getDonorInfoByActionId(@PathVariable Long id) {
         List<DonorInfoDTO> donorInfo = actionService.getDonorInfoByActionId(id);
