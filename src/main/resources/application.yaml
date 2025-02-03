@@ -9,6 +9,8 @@ spring:
     username: ${DB_USER:sa}
     password: ${DB_PASS:}
     schema: ${DB_SCHEMA:clean_city}
+    hikari:
+      maximum-pool-size: 5
   h2:
     console:
       enabled: true
