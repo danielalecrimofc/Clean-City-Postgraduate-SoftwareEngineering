@@ -1,55 +1,55 @@
-name: Create Release
+# name: Create Release
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  create-release:
-    runs-on: ubuntu-latest
+# jobs:
+#   create-release:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '17'
+#     - name: Set up JDK 17
+#       uses: actions/setup-java@v2
+#       with:
+#         distribution: 'adopt'
+#         java-version: '17'
 
-    - name: Increment version in pom.xml
-      id: increment_version
-      run: |
-        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-        NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF++;print}')
-        mvn versions:set -DnewVersion=$NEW_VERSION
-        mvn versions:commit
-        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+#     - name: Increment version in pom.xml
+#       id: increment_version
+#       run: |
+#         VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+#         NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF++;print}')
+#         mvn versions:set -DnewVersion=$NEW_VERSION
+#         mvn versions:commit
+#         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-    - name: Commit updated pom.xml
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add pom.xml
-        git commit -m "Increment version to $NEW_VERSION"
-        git push
+#     - name: Commit updated pom.xml
+#       run: |
+#         git config --global user.name 'github-actions'
+#         git config --global user.email 'github-actions@github.com'
+#         git add pom.xml
+#         git commit -m "Increment version to $NEW_VERSION"
+#         git push
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.NEW_VERSION }}
-        release_name: v${{ env.NEW_VERSION }}
-        draft: false
-        prerelease: false
+#     - name: Create Release
+#       id: create_release
+#       uses: actions/create-release@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         tag_name: ${{ env.NEW_VERSION }}
+#         release_name: v${{ env.NEW_VERSION }}
+#         draft: false
+#         prerelease: false
 
-    - name: Trigger Deploy Workflow
-      uses: benc-uk/workflow-dispatch@v1
-      with:
-        workflow: deploy.yml
-        token: ${{ secrets.GITHUB_TOKEN }}
-        ref: main
+#     - name: Trigger Deploy Workflow
+#       uses: benc-uk/workflow-dispatch@v1
+#       with:
+#         workflow: deploy.yml
+#         token: ${{ secrets.GITHUB_TOKEN }}
+#         ref: main
