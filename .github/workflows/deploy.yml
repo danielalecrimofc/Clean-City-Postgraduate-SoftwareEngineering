@@ -58,10 +58,10 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
-        heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}
+        heroku container:push web
 
     - name: Publish Release
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
-        heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
+        heroku container:release web
